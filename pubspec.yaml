@@ -1,0 +1,60 @@
+name: presentation
+description: a project that demonstrates the bloc pattern in flutter using the Bloc package
+publish_to: 'none'
+version: 1.1.0+4
+
+scripts:
+  dev: flutter run --flavor dev --dart-define="FLAVOR=dev"
+  staging: flutter run --flavor staging --dart-define="FLAVOR=staging"
+  staging-release: flutter run --flavor staging --dart-define="FLAVOR=staging --release"
+  prod: flutter run --flavor prod --dart-define="FLAVOR=prod"
+
+  # build commands
+  build:
+    android:
+      apk:
+        dev: flutter build apk --flavor dev --dart-define="FLAVOR=dev" --release
+        staging: flutter build apk --flavor staging --dart-define="FLAVOR=staging" --release
+        prod: flutter build apk --flavor prod --dart-define="FLAVOR=prod" --release && open build/app/outputs/flutter-apk/
+      bundle:
+        staging: flutter build appbundle --release --flavor staging --dart-define="FLAVOR=staging"
+        prod: flutter build appbundle --flavor prod --dart-define="FLAVOR=prod" --release && open build/app/outputs/bundle/prodRelease/
+    # TODO need to see how to automate this and upload to AppStore Connect
+    ios:
+      dev: flutter build ipa --flavor dev --dart-define="FLAVOR=dev" --release && open build/ios/ipa/
+      staging: flutter build ipa --flavor staging --dart-define="FLAVOR=staging" --release && open build/ios/ipa/
+      prod: flutter build ipa --flavor prod --dart-define="FLAVOR=prod" --release && open build/ios/ipa/
+  create:
+    # splash: dart run flutter_native_splash:create
+    module: dart create -t package
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  # COMMON
+  common_dependencies:
+    path: ./modules/common_dependencies
+
+  state_management:
+    path: ./modules/core/state_management
+
+  # UI
+  home:
+    path: ./modules/ui/home
+  common_ui:
+    path: ./modules/ui/common_ui
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
